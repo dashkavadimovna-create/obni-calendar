@@ -1,6 +1,6 @@
 const {JSDOM,VirtualConsole}=require('jsdom');
 const fs=require('fs'),assert=require('node:assert/strict');
-let source=fs.readFileSync('index.html','utf8').replace('<script src="design.js?v=2.2"></script>','<script>'+fs.readFileSync('design.js','utf8').replace(/<\/script/gi,'<\\/script')+'</script>');
+let source=fs.readFileSync('index.html','utf8').replace(/<script src="([^"]+)"><\/script>/g,(_,src)=>'<script>'+fs.readFileSync(src.split('?')[0],'utf8').replace(/<\/script/gi,'<\\/script')+'</script>');
 const errors=[],alerts=[],downloads=[];
 const dom=new JSDOM(source,{url:'https://example.test/obni-calendar/',runScripts:'dangerously',virtualConsole:new VirtualConsole().on('jsdomError',e=>errors.push(e.message)),beforeParse(w){w.alert=s=>alerts.push(s);w.confirm=()=>true;w.scrollTo=()=>{};w.URL.createObjectURL=b=>{downloads.push(b);return 'blob:example'};w.URL.revokeObjectURL=()=>{};w.HTMLAnchorElement.prototype.click=function(){};w.HTMLElement.prototype.scrollIntoView=function(){};w.HTMLElement.prototype.setPointerCapture=function(){};}});
 const w=dom.window,d=w.document,$=id=>d.getElementById(id),set=(id,v)=>{$(id).value=v;$(id).dispatchEvent(new w.Event('change'))},click=id=>$(id).click(),items=()=>[...d.querySelectorAll('[data-design-item]')],selected=()=>d.querySelector('.layer-button[aria-pressed="true"]'),state=()=>JSON.parse(w.localStorage.getItem('obni_design_v1'));
