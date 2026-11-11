@@ -128,8 +128,8 @@ el('raiseDecoration').onclick=()=>reorder(1);el('lowerDecoration').onclick=()=>r
 function normalizedAngle(v){return ((v+180)%360+360)%360-180;}
 for(const [id,field,convert] of [['designScale','scale',v=>clamp(v/100,.2,4)],['designRotation','rotation',v=>normalizedAngle(v)],['designX','x',v=>clamp(v,-200,1280)],['designY','y',v=>clamp(v,-200,1550)]]){
  const input=el(id);input.addEventListener('focus',()=>{valueBefore=clone(monthDesign());});input.addEventListener('pointerdown',()=>{valueBefore=clone(monthDesign());});
- if(input.type==='range')input.oninput=()=>{const i=current();if(!i||i.locked)return;if(!valueBefore)valueBefore=clone(monthDesign());i[field]=convert(number(input.value));paintCanvas(true);el('scaleValue').textContent=Math.round(i.scale*100)+'%';el('rotationValue').textContent=Math.round(i.rotation)+'°';};
- input.onchange=()=>{const i=current();if(!i||i.locked)return;const before=valueBefore||clone(monthDesign());i[field]=convert(number(input.value));remember(before);valueBefore=null;paint();};
+ input.oninput=()=>{const i=current();if(!i||i.locked||input.value==='')return;if(!valueBefore)valueBefore=clone(monthDesign());i[field]=convert(number(input.value));paintCanvas(true);el('scaleValue').textContent=Math.round(i.scale*100)+'%';el('rotationValue').textContent=Math.round(i.rotation)+'°';};
+ const commitValue=()=>{const i=current();if(!i||i.locked)return;if(input.value===''){valueBefore=null;paint();return;}const before=valueBefore||clone(monthDesign());i[field]=convert(number(input.value));remember(before);valueBefore=null;paint();};input.onchange=commitValue;input.addEventListener('blur',commitValue);
 }
 function pos(e){const r=el('poster').getBoundingClientRect();return {x:(e.clientX-r.left)*1080/r.width,y:(e.clientY-r.top)*1350/r.height};}
 function pairGeometry(){const a=[...points.values()];return {x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2,d:Math.max(1,Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)),angle:Math.atan2(a[1].y-a[0].y,a[1].x-a[0].x)*180/Math.PI};}
