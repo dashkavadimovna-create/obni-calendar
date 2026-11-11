@@ -4,3 +4,5 @@
 @media(max-width:800px){.mode-tabs{top:max(6px,env(safe-area-inset-top));margin:8px 0}.mode-tabs button{padding:9px 22px}.design-tools{top:66px;padding:7px}.design-tools .tool-row{gap:5px}.design-tools .tool-row button{font-size:12px;min-width:42px;padding:8px}.design-mode .preview{order:-1}.design-mode .preview .poster{max-width:min(540px,75vh)}.design-panel{order:1}.sticker-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.sticker-card{min-height:100px}.sticker-card svg,.sticker-card img{width:56px;height:56px}.design-mode .preview h2{font-size:15px}.quick-values{gap:10px}.design-mode .layout{gap:12px}.design-panel details{margin-top:18px}}
 @media(max-width:390px){.sticker-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.tool-row button{flex-grow:1}.top h1{font-size:19px}.tag{font-size:10px}.design-tools{top:64px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+@media(min-width:801px){.design-mode .design-panel{grid-column:1;grid-row:1}.design-mode .preview{grid-column:2;grid-row:1}}
+@media(max-width:800px){.design-mode .preview{grid-column:1;grid-row:1}.design-mode .design-panel{grid-column:1;grid-row:2}}

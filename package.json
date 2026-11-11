@@ -1,0 +1,10 @@
+{
+  "name": "obni-calendar",
+  "private": true,
+  "scripts": {
+    "test": "node design.test.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "31.0.0"
+  }
+}
