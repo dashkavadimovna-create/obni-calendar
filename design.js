@@ -162,7 +162,7 @@ for(const id of ['theme','columns']){el(id).onchange=()=>{
  }});render();
 };}
 // The original month/year change handlers already call the wrapped renderer.
-el('saveTemplate').onclick=()=>{const name=el('templateName').value.trim();if(!name){toast('Дай шаблону название.');el('templateName').focus();return;}const t={id:uid(),name,design:clone(monthDesign())};state.templates.push(t);persist();paintTemplates();el('templateSelect').value=t.id;el('applyTemplate').disabled=false;el('templateName').value='';toast('Шаблон сохранен. Его можно применить в другом месяце.');};
+el('saveTemplate').onclick=()=>{const name=el('templateName').value.trim();if(!name){toast('Дай шаблону название.');el('templateName').focus();return;}const t={id:uid(),name,design:clone(monthDesign())};state.templates.push(t);const stored=persist();paintTemplates();el('templateSelect').value=t.id;el('applyTemplate').disabled=false;el('templateName').value='';if(stored)toast('Шаблон сохранен. Его можно применить в другом месяце.');};
 el('applyTemplate').onclick=()=>{const t=state.templates.find(t=>t.id===el('templateSelect').value);if(!t)return;if(!confirm('Применить шаблон «'+t.name+'»? Оформление этого месяца изменится, встречи останутся. Действие можно отменить.'))return;const before=clone(monthDesign());state.months[key()]=clone(t.design);state.months[key()].items.forEach(i=>i.id=uid());selected=null;el('theme').value=t.design.theme;el('columns').value=String(t.design.columns);remember(before);render();toast('Шаблон применен');};
 function safeSVG(text){
  const doc=new DOMParser().parseFromString(text,'image/svg+xml'),root=doc.documentElement;

@@ -6,3 +6,5 @@
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 @media(min-width:801px){.design-mode .design-panel{grid-column:1;grid-row:1}.design-mode .preview{grid-column:2;grid-row:1}}
 @media(max-width:800px){.design-mode .preview{grid-column:1;grid-row:1}.design-mode .design-panel{grid-column:1;grid-row:2}}
+
+.poster.design-active{-webkit-touch-callout:none}
